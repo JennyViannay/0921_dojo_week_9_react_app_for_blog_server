@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { FaTrash } from 'react-icons/fa';
+import { FaTrash, FaPen } from 'react-icons/fa';
 
 // component enfant recevant les props : les infos d'un article et la fonction deleteArticle
 const ArticleCard = ({ article, deleteArticle }) => {
@@ -18,14 +18,19 @@ const ArticleCard = ({ article, deleteArticle }) => {
                     <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#travel</span>
                     <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#winter</span>
                 </div>
-                <div className="px-6 pt-4 pb-2">
+                <div className="flex justify-center px-6 pt-4 pb-2">
                     <button
-                        className="bg-green-900 hover:bg-green-800 text-white font-bold py-2 px-4 rounded-full"
+                        className="bg-green-900 hover:bg-green-800 text-white font-bold py-2 px-4 mx-2 rounded-full"
                         // quand j'appelle une methode directement dans le onClick je dois la déclencher dans une fonction anonyme : () => {maMethode()}
                         // car sinon la methode deleteArticle provoquera des effets de bord inatendus 
                         onClick={() => deleteArticle(article.id)}>
                         <FaTrash />
                     </button>
+                    <Link
+                        to={`/edit-article/${article.id}`}
+                        className="bg-green-900 hover:bg-green-800 text-white font-bold py-2 px-4 mx-2 rounded-full">
+                        <FaPen />
+                    </Link>
                 </div>
             </div>
         </div>
