@@ -4,6 +4,7 @@ import Navbar from "./components/ui/Navbar";
 import Articles from "./components/articles/Articles";
 import Article from "./components/articles/Article";
 import ArticleForm from "./components/articles/ArticleForm";
+import Wishlist from "./components/userAccount/Wishlist";
 import Footer from './components/ui/Footer';
 
 const App = () => {
@@ -15,6 +16,7 @@ const App = () => {
         <Route path="/article/:id" element={<Article />} />
         <Route path="/create-article" element={<ArticleForm />} />
         <Route path="/edit-article/:id" element={<ArticleForm />} />
+        <Route path="/wishlist" element={<Wishlist />} />
       </Routes>
       <Footer />
     </Router>
