@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { CartContext } from "../../contexts/CartContext";
+import { UserContext } from "../../contexts/UserContext";
 
 const Navbar = () => {
   const [navbarOpen, setNavbarOpen] = useState(false);
+  const { count } = useContext(CartContext);
+  const { user } = useContext(UserContext);
   return (
     <div className="App">
       <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-green-900">
@@ -11,7 +15,7 @@ const Navbar = () => {
               className="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white"
               href="/"
             >
-              React Front For Node.JS Server Blog
+              { user ? `Welcome ${user.username}` : "React Front For Node.JS Server Blog"}
             </a>
             <button
               className="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
@@ -40,17 +44,17 @@ const Navbar = () => {
               <li className="nav-item">
                 <a
                   className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                  href="#pablo"
+                  href="/cart"
                 >
-                  <i className="fab fa-twitter text-lg leading-lg text-white opacity-75"></i><span className="ml-2">Tweet</span>
+                  <i className="fab fa-pinterest text-lg leading-lg text-white opacity-75"></i><span className="ml-2">Cart<div className="text-xs px-3 bg-red-200 text-red-800 rounded-full">{count}</div></span>
                 </a>
               </li>
               <li className="nav-item">
                 <a
                   className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                  href="#pablo"
+                  href="login"
                 >
-                  <i className="fab fa-pinterest text-lg leading-lg text-white opacity-75"></i><span className="ml-2">Pin</span>
+                  <i className="fab fa-pinterest text-lg leading-lg text-white opacity-75"></i><span className="ml-2">Login</span>
                 </a>
               </li>
             </ul>

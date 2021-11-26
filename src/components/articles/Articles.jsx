@@ -1,12 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import axios from "axios";
 import ArticleCard from './ArticleCard';
+import { CartContext } from '../../contexts/CartContext';
+import { UserContext } from '../../contexts/UserContext';
+import { RandomContext } from '../../contexts/RandomContext';
 // Component Parent :
 // Contient les datas et les methodes pour mes enfants
-const Articles = () => {
+const Articles = ({ getCountCart }) => {
     // init d'un state pour recevoir tous les articles
     const [articles, setArticles] = useState([]);
-
+    const { count, setCount } = useContext(CartContext);
+    const { user } = useContext(UserContext);
+    const { random } = useContext(RandomContext);
     // lorsque le compononent sera monté, useEffect appelera la methode getAllArticles
     useEffect(() => {
         getAllArticles()
@@ -29,17 +34,34 @@ const Articles = () => {
         getAllArticles()
     }
 
+    const addToCart = (idArticle) => {
+        const newCartList = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
+        if (!newCartList.some(item => item.id === idArticle)) {
+            newCartList.push({ id: idArticle, quantity: 1 })
+        } else {
+            newCartList.forEach(item => {
+                if (item.id === idArticle) {
+                    item.quantity++
+                }
+            })
+        }
+        localStorage.setItem('cart', JSON.stringify(newCartList))
+        getCountCart();
+    }
+    console.log(random)
     return (
         <div className="flex flex-wrap">
+            
             {articles ?
                 articles.map(article => (
                     // compononent enfant me permettant d'afficher un article et de lui passer les methodes dont il a besoin
                     // ici article (toutes les infos d'un article) et deleteArticle (methode pour supprimer un article)
-                    <ArticleCard key={article.id} article={article} deleteArticle={deleteArticle} />
+                    <ArticleCard key={article.id} article={article} deleteArticle={deleteArticle} addToCart={addToCart} />
                 ))
                 :
                 <p>Nothing to show</p>
             }
+            {random && random.plopinnette}
         </div>
     )
 }
